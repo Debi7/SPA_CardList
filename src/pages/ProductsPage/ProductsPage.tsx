@@ -12,15 +12,13 @@ const ProductsPage: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      if (products.length === 0) {
-        const response = await fetch('https://fakestoreapi.com/products');
-        const data = await response.json();
-        dispatch(setProducts(data));
-      }
+      const response = await fetch('https://fakestoreapi.com/products');
+      const data = await response.json();
+      dispatch(setProducts(data));
     };
 
     fetchProducts();
-  }, [dispatch, products.length]);
+  }, [dispatch]);
 
   return (
     <div className='wrapper'>
