@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../features/products/productsSlice';
+import Button from '../../components/Button';
+// import { useDispatch } from 'react-redux';
+// import { addProduct } from '../../features/products/productsSlice';
 
 interface FormValues {
   title: string;
@@ -12,7 +13,7 @@ interface FormValues {
 
 const CreateProductPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (data: FormValues) => {
@@ -22,25 +23,20 @@ const CreateProductPage: React.FC = () => {
       liked: false,
     };
 
-    // Получаем существующие продукты из localStorage
     const storedProducts = JSON.parse(localStorage.getItem('products') || '[]');
 
-    // Добавляем новый продукт
     const updatedProducts = [...storedProducts, newProduct];
 
-    // Сохраняем обновленный массив продуктов в localStorage
     localStorage.setItem('products', JSON.stringify(updatedProducts));
 
     // Обновляем Redux Store
-    dispatch(addProduct(newProduct));
+    // dispatch(addProduct(newProduct));
 
-    // Перенаправляем пользователя на главную страницу
     navigate('/');
   };
 
   return (
     <div className="create-product-page">
-      <h1>Create New Product</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
@@ -57,7 +53,7 @@ const CreateProductPage: React.FC = () => {
             },
           })}
         />
-        {errors.title && <p>{errors.title.message}</p>}
+        {errors.title && <p className='text-error'>{errors.title.message}</p>}
 
         <textarea
           placeholder="Description"
@@ -73,7 +69,7 @@ const CreateProductPage: React.FC = () => {
             },
           })}
         />
-        {errors.description && <p>{errors.description.message}</p>}
+        {errors.description && <p className='text-error'>{errors.description.message}</p>}
 
         <input
           type="text"
@@ -86,11 +82,10 @@ const CreateProductPage: React.FC = () => {
             },
           })}
         />
-        {errors.image && <p>{errors.image.message}</p>}
+        {errors.image && <p className='text-error'>{errors.image.message}</p>}
 
-        <button type="submit">Create Product</button>
+        <Button type="submit">Create Product</Button>
       </form>
-      <button onClick={() => navigate('/')}>Back to Products</button>
     </div>
   );
 };

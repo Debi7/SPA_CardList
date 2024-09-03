@@ -9,6 +9,7 @@ import Button from './Button';
 interface ProductCardProps {
   product: Product;
   onClick: () => void;
+  className?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {

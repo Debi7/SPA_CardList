@@ -12,11 +12,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.wrapper {
-  width: 95%;
-  border-color: rgb(109, 66, 134);
-}
-
 .product-card-container {
   margin: 0 auto;
   background-color: rgb(221, 212, 231);
@@ -36,7 +31,7 @@
   display: flex;
   justify-content: space-between;
   padding: 7px;
-  height: 250px;
+  height: 313px;
 }
 
 .product-content {
@@ -53,7 +48,6 @@
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   width: 370px;
-  height: 500px;
   line-height: normal;
   /* background-color: red; */
 }
@@ -91,19 +85,43 @@ button:hover {
 
 .nav {
   margin: 0 auto;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   background-color: inherit;
   width: 680px;
   height: 35px;
   padding: 10px;
+  /* background-color: red; */
 }
 
-.no-underline {
+.nav-link {
   text-decoration: none;
   color: #000;
   font-size: 21px;
   font-weight: 400;
+}
+
+.nav-link:hover,
+.nav-link:active {
+  text-shadow: 0 10px 31px rgb(70, 28, 118);
+  border-bottom: 3px solid #ffff;
+}
+
+.wrapper-search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 230px;
+  /* background-color: red; */
+}
+
+.search-input {
+  outline: none;
+  border: none;
+  height: 30px;
+  padding-left: 7px;
 }
 
 /*  */
@@ -113,19 +131,19 @@ button:hover {
   align-items: flex-start;
   gap: 30px;
   padding: 20px;
-  height: 700px;
+  height: 650px;
   /* background-color: red; */
 }
 
 .product-detail-container img {
   border-radius: 7px;
   width: 700px;
-  height: 700px;
+  height: 650px;
 }
 
 .product-detail-text {
   position: relative;
-  height: 700px;
+  height: 650px;
   /* background-color: aqua; */
 }
 
@@ -161,38 +179,41 @@ button:hover {
   width: 700px;
   height: 700px;
   padding: 30px;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 
 .create-product-page form {
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-direction: column;
-  height: 500px;
-  margin-bottom: 79px;
 }
 
-.create-product-page input {
+.create-product-page input,
+.create-product-page textarea {
   outline: none;
   height: 30px;
+  margin-bottom: 20px;
 }
 
+.create-product-page textarea {
+  height: 70px;
+}
+
+.text-error {
+  color: red;
+  margin-top: -20px;
+}
 
 /*  */
 /* favorites */
 .product-list-favorites {
   margin: 0 auto;
-  width: 95%;
-  height: 100vh;
-  padding: 10px;
-  /* background-color: red; */
+  width: 700px;
 }
 
 .product-list {
-  padding-top: 5px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-b;
-  background-color: red;
+  justify-content: space-between;
 }

@@ -4,7 +4,6 @@ import { RootState } from '../../store';
 import { setProducts } from '../../features/products/productsSlice';
 import ProductCard from '../../components/ProductCard';
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../../components/Navigation';
 
 const ProductsPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -13,17 +12,18 @@ const ProductsPage: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      dispatch(setProducts(data));
+      if (products.length === 0) {
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        dispatch(setProducts(data));
+      }
     };
 
     fetchProducts();
-  }, [dispatch]);
+  }, [dispatch, products.length]);
 
   return (
     <div className='wrapper'>
-      <Navigation />
       <div className="products-page">
         {products.map(product => (
           <ProductCard

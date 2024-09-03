@@ -4,23 +4,20 @@ import ProductsPage from './pages/ProductsPage/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage/CreateProductPage';
 import FavoritePage from './components/FavoritePage';
+import Navigation from './components/Navigation';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Routes>
-        {/* Главная страница со списком продуктов */}
-        <Route path="/" element={<ProductsPage />} />
-
-        {/* Страница избранных продуктов */}
-        <Route path="/favorites" element={<FavoritePage />} />
-
-        {/* Детальная страница продукта */}
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-
-        {/* Страница для создания нового продукта */}
-        <Route path="/create-product" element={<CreateProductPage />} />
-      </Routes>
+      <div>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<ProductsPage />} />
+          <Route path="/favorites" element={<FavoritePage />} />
+          <Route path="/create-product" element={<CreateProductPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+        </Routes>
+      </div>
     </Router>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import Button from '../../components/Button';
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const ProductDetailPage: React.FC = () => {
         <div className='product-detail-text'>
           <h1>{product.title}</h1>
           <p>{product.description}</p>
-          <button onClick={() => navigate('/')}>Back to Products</button>
+          <Button onClick={() => navigate('/')}>Back to Products</Button>
         </div>
       </div>
     </>
