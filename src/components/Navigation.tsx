@@ -1,15 +1,19 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { searchProducts } from '../features/products/productsSlice';
 import { IoIosSearch } from "react-icons/io";
 import Button from './Button';
 
 
 const Navigation: React.FC = () => {
-  // const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch();
 
-  // const handleSearch = () => {
-  //   dispatch((product.id));  /* value из inputa */
-  // };
+  const handleSearch = () => {
+    dispatch(searchProducts(searchTerm));
+  };
+
 
   return (
     <>
@@ -18,9 +22,9 @@ const Navigation: React.FC = () => {
         <Link to="/favorites" className="nav-link">Favorites</Link>
         <Link to="/create-product" className="nav-link">Create Product</Link>
         <div className='wrapper-search'>
-          <input type="text" placeholder='Search' className="search-input" />
+          <input type="text" placeholder='Search' className="search-input" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           <Button
-            // onClick={handleSearch} 
+            onClick={handleSearch}
             className="search-button">
             <IoIosSearch color="#000000" />
           </Button>
