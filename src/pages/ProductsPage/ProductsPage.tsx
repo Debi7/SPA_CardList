@@ -54,10 +54,10 @@ const ProductsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === 'idle' && products.length === 0) {
+    if (status === 'idle') {
       dispatch(fetchProducts());
     }
-  }, [dispatch, status, products.length]);
+  }, [dispatch, status]);
 
   const handleProductClick = useCallback((productId: number) => {
     navigate(`/products/${productId}`);

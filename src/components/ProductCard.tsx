@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { toggleLike, deleteProduct } from '../features/products/productsSlice';
 import { Product } from '../types/ProductTypes';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaTrash } from 'react-icons/fa';
+import dispatch from '../pages/ProductsPage/ProductsPage';
 import Button from './Button';
 
 interface ProductCardProps {
@@ -13,7 +14,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleLike = () => {
     dispatch(toggleLike(product.id));
