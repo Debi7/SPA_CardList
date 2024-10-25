@@ -1,50 +1,10 @@
-// import React, { useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { RootState } from '../../store';
-// import { setProducts } from '../../features/products/productsSlice';
-// import ProductCard from '../../components/ProductCard';
-// import { useNavigate } from 'react-router-dom';
-
-// const ProductsPage: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const products = useSelector((state: RootState) => state.products.items);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       if (products.length === 0) {
-//         const response = await fetch('https://fakestoreapi.com/products');
-//         const data = await response.json();
-//         dispatch(setProducts(data));
-//       }
-//     };
-
-//     fetchProducts();
-//   }, [dispatch, products.length]);
-
-//   return (
-//     <div className='wrapper'>
-//       <div className="products-page">
-//         {products.map(product => (
-//           <ProductCard
-//             key={product.id}
-//             product={product}
-//             onClick={() => navigate(`/products/${product.id}`)}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductsPage;
-
-
 import React, { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchProducts } from '../../features/products/productsSlice';
 import ProductCard from '../../components/ProductCard';
 import { useNavigate } from 'react-router-dom';
+import { setProducts, Product } from '../../features/products/productsSlice';
+
 
 const ProductsPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -56,36 +16,52 @@ const ProductsPage: React.FC = () => {
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchProducts());
+    } else if (status === 'succeeded') {
+      const storedProducts = JSON.parse(localStorage.getItem('products') || '[]');
+
+      if (storedProducts.length > 0) {
+        const filteredStoredProducts = storedProducts.filter(
+          (storedProduct: Product) => !products.some(product => product.id === storedProduct.id)
+        );
+        const combinedProducts = [...products, ...filteredStoredProducts];
+        dispatch(setProducts(combinedProducts));
+      }
     }
   }, [dispatch, status]);
+
 
   const handleProductClick = useCallback((productId: number) => {
     navigate(`/products/${productId}`);
   }, [navigate]);
 
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>;
+  // }
 
   if (status === 'failed') {
     return <div>Error fetching products: {error}</div>;
   }
 
   return (
-    <div>
-      {Array.isArray(products) && products.length > 0 ? (
-        products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onClick={() => handleProductClick(product.id)}
-          />
-        ))
-      ) : (
-        <p>No products available</p>
-      )}
+    <div className="product-list-home">
+      <div className="product-list">
+        {Array.isArray(products) && products.length > 0 ? (
+          products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClick={() => handleProductClick(product.id)}
+            />
+          ))
+        ) : (
+          <p>No products available</p>
+        )}
+      </div>
     </div>
   );
 };
 
 export default ProductsPage;
+
+// TODO в localStorage должен сохраняться вновь созданный товар, чтобы при перезагрузке страницы этот товар отображался в конце списка товаров из API
+// и лайки на товаре при перезагрузке страницы тоже должны сохраняться, если на товаре поставлен лайк (это касается изначальных товаров и вновь созданных)

@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  background-color: #eceaea;
+  background-color: rgb(236, 234, 234);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -206,7 +206,8 @@ button:hover {
 
 /*  */
 /* favorites */
-.product-list-favorites {
+.product-list-favorites,
+.product-list-home {
   margin: 0 auto;
   width: 700px;
 }

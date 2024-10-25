@@ -6,7 +6,6 @@ import { RootState } from '../store';
 const FavoritePage: React.FC = () => {
   const products = useSelector((state: RootState) => state.products.items);
   const favoriteProducts = products.filter(product => product.liked);
-  // const navigate = useNavigate();
 
   return (
     <div className="product-list-favorites">
@@ -16,7 +15,7 @@ const FavoritePage: React.FC = () => {
             <ProductCard className={'product-card-favorites'} key={product.id} product={product} onClick={() => { }} />
           ))
         ) : (
-          <p>No favorite products yet.</p>
+          <p>No favorite products yet</p>
         )}
       </div>
     </div>

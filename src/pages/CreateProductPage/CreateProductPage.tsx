@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button';
-// import { useDispatch } from 'react-redux';
-// import { addProduct } from '../../features/products/productsSlice';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../features/products/productsSlice';
 
 interface FormValues {
   title: string;
@@ -13,7 +13,7 @@ interface FormValues {
 
 const CreateProductPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (data: FormValues) => {
@@ -26,12 +26,9 @@ const CreateProductPage: React.FC = () => {
     const storedProducts = JSON.parse(localStorage.getItem('products') || '[]');
 
     const updatedProducts = [...storedProducts, newProduct];
-
     localStorage.setItem('products', JSON.stringify(updatedProducts));
 
-    // Обновляем Redux Store
-    // dispatch(addProduct(newProduct));
-
+    dispatch(addProduct(newProduct));
     navigate('/');
   };
 

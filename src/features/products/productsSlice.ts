@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiInstance } from '../../apiConfig';
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -16,7 +16,7 @@ interface ProductsState {
   error: string | null;
 }
 
-const STORAGE_KEY = 'products';
+export const STORAGE_KEY = 'products';
 
 const loadProducts = (): Product[] => {
   const savedProducts = localStorage.getItem(STORAGE_KEY);
@@ -77,6 +77,12 @@ const productsSlice = createSlice({
         product.title.toLowerCase().includes(searchTerm)
       );
     },
+
+    addProduct: (state, action: PayloadAction<Product>) => {
+      state.items.push(action.payload);
+      state.initialItems.push(action.payload);
+      saveProducts(state.items);
+    },
   },
 
   extraReducers: (builder) => {
@@ -93,11 +99,7 @@ const productsSlice = createSlice({
           state.initialItems = action.payload;
           saveProducts(state.items);
         }
-      )
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message || 'Failed to fetch products';
-      });
+      );
   },
 });
 
@@ -108,6 +110,7 @@ export const {
   restoreAllProducts,
   clearAllProducts,
   searchProducts,
+  addProduct,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
