@@ -7,6 +7,7 @@ import FavoritePage from './components/FavoritePage';
 import Navigation from './components/Navigation';
 
 const App: React.FC = () => {
+
   return (
     <Router>
       <div>

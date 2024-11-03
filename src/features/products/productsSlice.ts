@@ -37,6 +37,7 @@ const initialState: ProductsState = {
 export const fetchProducts = createAsyncThunk<Product[], void>(
   'products/fetchProducts',
   async () => {
+    console.log(1);
     const data = await apiInstance.get<Product[]>('/products');
     return data;
   }
