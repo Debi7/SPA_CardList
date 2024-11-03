@@ -18,7 +18,7 @@ interface ProductsState {
 
 export const STORAGE_KEY = 'products';
 
-const loadProducts = (): Product[] => {
+const loadStoredProducts = (): Product[] => {
   const savedProducts = localStorage.getItem(STORAGE_KEY);
   return savedProducts ? JSON.parse(savedProducts) : [];
 };
@@ -28,17 +28,23 @@ const saveProducts = (items: Product[]) => {
 };
 
 const initialState: ProductsState = {
-  initialItems: loadProducts(),
-  items: loadProducts(),
+  initialItems: loadStoredProducts(),
+  items: loadStoredProducts(),
   status: 'idle',
   error: null,
 };
 
-export const fetchProducts = createAsyncThunk<Product[], void>(
-  'products/fetchProducts',
+export const fetchAndStoreProducts = createAsyncThunk<Product[], void>(
+  'products/fetchAndStoreProducts',
   async () => {
-    console.log(1);
+    const storedProducts = loadStoredProducts();
+
+    if (storedProducts.length > 0) {
+      return storedProducts;
+    }
+
     const data = await apiInstance.get<Product[]>('/products');
+    saveProducts(data);
     return data;
   }
 );
@@ -88,19 +94,22 @@ const productsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchAndStoreProducts.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
       .addCase(
-        fetchProducts.fulfilled,
+        fetchAndStoreProducts.fulfilled,
         (state, action: PayloadAction<Product[]>) => {
           state.status = 'succeeded';
           state.items = action.payload;
           state.initialItems = action.payload;
-          saveProducts(state.items);
         }
-      );
+      )
+      .addCase(fetchAndStoreProducts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message ?? 'Failed to load products';
+      });
   },
 });
 

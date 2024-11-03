@@ -1,10 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchProducts } from '../../features/products/productsSlice';
+import { fetchAndStoreProducts } from '../../features/products/productsSlice';
 import ProductCard from '../../components/ProductCard';
 import { useNavigate } from 'react-router-dom';
-import { setProducts, Product } from '../../features/products/productsSlice';
-
 
 const ProductsPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,21 +12,8 @@ const ProductsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchProducts());
-    } else if (status === 'succeeded') {
-      const storedProducts = JSON.parse(localStorage.getItem('products') || '[]');
-
-      if (storedProducts.length > 0) {
-        const filteredStoredProducts = storedProducts.filter(
-          (storedProduct: Product) => !products.some(product => product.id === storedProduct.id)
-        );
-        const combinedProducts = [...products, ...filteredStoredProducts];
-        dispatch(setProducts(combinedProducts));
-      }
-    }
-  }, [dispatch, status]);
-
+    dispatch(fetchAndStoreProducts());
+  }, [dispatch]);
 
   const handleProductClick = useCallback((productId: number) => {
     navigate(`/products/${productId}`);
@@ -62,6 +47,3 @@ const ProductsPage: React.FC = () => {
 };
 
 export default ProductsPage;
-
-// TODO в localStorage должен сохраняться вновь созданный товар, чтобы при перезагрузке страницы этот товар отображался в конце списка товаров из API
-// и лайки на товаре при перезагрузке страницы тоже должны сохраняться, если на товаре поставлен лайк (это касается изначальных товаров и вновь созданных)
