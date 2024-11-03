@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   // base: './',
-  base: '/SPA_CardList/',
+  base: './SPA_CardList/',
 
   plugins: [react()],
   server: {
