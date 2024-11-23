@@ -13,11 +13,10 @@ const App: React.FC = () => {
       <div>
         <Navigation />
         <Routes>
-          {/* <Route path="/" element={<ProductsPage />} /> */}
           <Route path="/SPA_CardList/" element={<ProductsPage />} />
-          <Route path="/favorites" element={<FavoritePage />} />
-          <Route path="/create-product" element={<CreateProductPage />} />
-          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/SPA_CardList/favorites" element={<FavoritePage />} />
+          <Route path="/SPA_CardList/create-product" element={<CreateProductPage />} />
+          <Route path="/SPA_CardList/products/:id" element={<ProductDetailPage />} />
         </Routes>
       </div>
     </Router>
