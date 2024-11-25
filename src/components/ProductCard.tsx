@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
 
   return (
     <div className="product-card-container">
-      <Link to={`/products/${product.id}`} className="product-card-link">
+      <Link to={`products/${product.id}`} className="product-card-link">
         <div className="product-card" onClick={onClick}>
           <img className="product-img" src={product.image} alt={product.title} />
           <div className="product-content">

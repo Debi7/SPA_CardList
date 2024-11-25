@@ -29,7 +29,7 @@ const CreateProductPage: React.FC = () => {
     localStorage.setItem('products', JSON.stringify(updatedProducts));
 
     dispatch(addProduct(newProduct));
-    navigate('/');
+    navigate('/SPA_CardList/');
   };
 
   return (

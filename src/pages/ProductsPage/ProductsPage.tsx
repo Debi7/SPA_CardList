@@ -16,7 +16,7 @@ const ProductsPage: React.FC = () => {
   }, [dispatch]);
 
   const handleProductClick = useCallback((productId: number) => {
-    navigate(`/products/${productId}`);
+    navigate(`products/${productId}`);
   }, [navigate]);
 
   // if (status === 'loading') {
