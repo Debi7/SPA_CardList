@@ -218,3 +218,21 @@ button:hover {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+/* блок пагинации с кнопками */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.pagination button.active {
+  background-color: rgb(221, 212, 231);
+}
